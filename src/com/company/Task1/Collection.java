@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Task1;
 
 import java.util.Arrays;
 
@@ -12,13 +12,6 @@ public class Collection implements iCollection {
         return Arrays.toString(collection);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Collection)) return false;
-        Collection that = (Collection) o;
-        return Arrays.equals(getCollection(), that.getCollection());
-    }
 
     @Override
     public int hashCode() {
@@ -57,76 +50,109 @@ public class Collection implements iCollection {
 
                 temp[index] = element;
                 collection = Arrays.copyOf(temp, temp.length);
-                //System.out.println(Arrays.toString(collection));
             }
         }
     }
 
     @Override
-    public void DelByValue(int index) {
+    public void DelByIndex(int index) {
         if (index < collection.length && index >= 0) {
-            Integer[] temp = Arrays.copyOf(collection, collection.length );
+            Integer[] temp = Arrays.copyOf(collection, collection.length);
 
-            for (int i = index; i < temp.length-1; i++) {
-                temp[i] = temp[i+1];
+            for (int i = index; i < temp.length - 1; i++) {
+                temp[i] = temp[i + 1];
             }
-
-
-            collection = Arrays.copyOf(temp, temp.length-1);
-            // System.out.println(Arrays.toString(collection));
+            collection = Arrays.copyOf(temp, temp.length - 1);
         }
-
-
     }
-
 
 
     @Override
     public void DelAllElements() {
         for (int i = 0; i < collection.length; i++) {
-            collection[i]=null;
+            collection[i] = null;
 
         }
+        collection = Arrays.copyOf(collection, 0);
     }
 
 
     @Override
     public Integer GetSize() {
+
         return collection.length;
     }
 
     @Override
     public Boolean GetSearch(Integer element) {
-        int count=0;
         for (int i = 0; i < collection.length; i++) {
-            if(element==collection[i]);
-             return true;
-
-
+            if (element == collection[i]) ;
+            return true;
         }
-
         return null;
     }
 
     @Override
-    public Integer[] GetMatrixCopy(Integer[] collection) {
-        return new Integer[0];
+    public String GetMatrixCopy() {
+
+        Integer[] temp = Arrays.copyOf(collection, collection.length);
+
+        return   Arrays.toString(temp);
     }
+
 
     @Override
     public Integer GetElement(int index) {
-        return null;
+        return collection[index];
     }
 
     @Override
     public int GetIndexFirst(Integer element) {
-        return 0;
+        int result = 999;
+        if (GetSearch(element) == true) {
+            for (int index = 0; index < collection.length; index++) {
+                if (this.collection[index].equals(element)) {
+                    result = index;
+                    break;
+                }
+
+            }
+        }
+                return result;
     }
 
     @Override
     public int GetIndexLast(Integer element) {
-        return 0;
+        int result = 999;
+        if (GetSearch(element)==true){
+            for (int i = collection.length-1; i > 0; i--) {
+                if (element.equals(collection[i])){
+                    result = i;
+                    break;
+                }
+
+            }
+        }
+
+       // (result == 999? " no element in collection" : return result);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Collection[] collection) {
+
+            boolean result = false;
+            if (this.collection.length == collection.length) {
+                for (int i = 0; i < collection.length; i++) {
+                    if (!this.collection[i].equals(collection[i])) { return false; }
+                }
+                result = true;
+
+            }
+
+            return result;
+        }
     }
 
 
-}
+
